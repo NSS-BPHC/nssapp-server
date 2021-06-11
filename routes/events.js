@@ -4,17 +4,30 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 const Event = require('../models/event.js');
+const Test = require('../models/test.js');
+
 
 const jwtSecret = process.env.JWT_SECRET_TOKEN;
 const router = express.Router();
 
-
+router.post('/test', (req,res) => {
+  console.log('Hey');
+  const newTest = Test({
+    title: req.body.title,
+  });
+  newTest.save().then(()=> {
+    console.log("Hb");
+    res.status(201);
+  }).catch((errorInStoring) => {
+    res.status(400).send(`unable to save to database ${errorInStoring}`);
+  });
+})
 // [ADMIN] :  Create a new event
 router.post('/create', (req, res) => {
     const newEvent = Event({
       title: req.body.title,
       date: req.body.date,
-      startTime: req.body.employeeID,
+      startTime: req.body.startTime,
       endTime: req.body.endTime,
       withDrawTime: req.body.withDrawTime,
       location: req.body.location,
@@ -25,12 +38,23 @@ router.post('/create', (req, res) => {
     newEvent
         .save()
         .then(() => {
-            res.status(201);
+            res.status(201).send('Event Saved');
         })
         .catch((errorInStoring) => {
             res.status(400).send(`unable to save to database ${errorInStoring}`);
           });
 });
+
+router.get('/getAllEvents', async (req, res) => {
+  let results;
+  try {
+     results = await Event.find();
+   } catch (e) {
+     res.send({ message: "Error in Fetching events" });
+   }
+   res.json({rendezvous: results.map(result => result.toObject({getters: true}) )});
+ });
+
 
 // [ADMIN] :  Create a new event
 router.post('/delete', (req, res) => {

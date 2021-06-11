@@ -8,19 +8,19 @@ const eventSchema = new Schema({
         required: true,
     },
     date: {
-        type: Date,
+        type: String,
         required: true,
     },
     startTime: {
-        type: Date,
+        type: String,
         required: true,
     },
     endTime: {
-        type: Date,
+        type: String,
         required: true,
     },
     withDrawTime: {
-        type: Date,
+        type: String,
         required: true,
     },
     location: {
