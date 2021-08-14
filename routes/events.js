@@ -54,13 +54,12 @@ router.get('/getAllEvents', async (req, res) => {
    } catch (e) {
      res.send({ message: "Error in Fetching events" });
    }
-   res.json({rendezvous: results.map(result => result.toObject({getters: true}) )});
+   res.json({events: results.map(result => result.toObject({getters: true}) )});
  });
-
 
 // [ADMIN] :  Delete an event
 // TODO: Delete the event
-router.post('/delete', (req, res) => {
+router.post('/delete',(req, res) => {
   const newEvent = Event({
     title: req.body.title,
     date: req.body.date,
@@ -81,7 +80,6 @@ router.post('/delete', (req, res) => {
           res.status(400).send(`unable to save to database ${errorInStoring}`);
         });
 });
-
 
 // TODO: Event Registration
 router.post('/register', (req, res) => {
@@ -126,5 +124,3 @@ router.post('/register', (req, res) => {
 // TODO : Withdraw
 
 module.exports = router;
-
-
