@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const events = require('../routes/events');
 const volunteers = require('../routes/volunteers');
 

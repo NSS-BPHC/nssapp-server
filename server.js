@@ -1,11 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
 require('dotenv').config();
 
 const production = require('./startup/prod.js');
 
 const app = express();
-app.use(bodyParser.json());
 production(app);
 const connectDB = require('./config/db.js');
 require('./startup/routes')(app);
@@ -17,7 +15,3 @@ app.get('/ping', (req, res) => {
 const PORT = process.env.PORT || 3000;
 connectDB();
 app.listen(PORT, () => console.log(`Listening on Port ${PORT}`));
-
-
-
-
